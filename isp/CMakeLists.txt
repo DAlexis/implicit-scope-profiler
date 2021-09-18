@@ -8,8 +8,15 @@ endif()
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(RAPIDJSON_BUILD_EXAMPLES OFF)
+set(RAPIDJSON_BUILD_TESTS OFF)
+set(RAPIDJSON_BUILD_DOC OFF)
+
+add_subdirectory(3rdparty/rapidjson-1.1.0)
+
 add_subdirectory(isp)
 add_subdirectory(example)
+
 
 include(detect-gtest.cmake)
 if(GTEST_FOUND)

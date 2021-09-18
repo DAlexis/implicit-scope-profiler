@@ -3,20 +3,24 @@
 #include <thread>
 
 using namespace std;
-
-Host host;
+using namespace isp;
 
 void func_2()
 {
-    Scope s(host, "Function 2", EVENT_ID);
-
+    ISP_SCOPE("Function 2");
     std::this_thread::sleep_for(150ms);
+    Scope s(default_host, "some subtask", ISP_EVENT_ID);
+
+    ISP_INSTANT("Some point 1");
+    std::this_thread::sleep_for(150ms);
+    ISP_INSTANT("Some point 2");
+    std::this_thread::sleep_for(50ms);
 
 }
 
 void func_1()
 {
-    Scope s(host, "Function 1", EVENT_ID);
+    ISP_SCOPE("Function 1");
 
     std::this_thread::sleep_for(100ms);
     func_2();
@@ -26,15 +30,9 @@ void func_1()
 
 int main()
 {
-    cout << "Hello, world " << __FILE__ << " " << __LINE__ << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
-    cout << "event id = " << EVENT_ID << endl;
+    std::thread t(func_1);
     func_1();
-    host.write_timeline("test.json");
+    t.join();
+    ISP_WRITE_TIMELINE("test.json");
     return 0;
 }
