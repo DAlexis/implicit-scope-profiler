@@ -12,6 +12,7 @@ set(RAPIDJSON_BUILD_EXAMPLES OFF)
 set(RAPIDJSON_BUILD_TESTS OFF)
 set(RAPIDJSON_BUILD_DOC OFF)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wimplicit-fallthrough=0")
 add_subdirectory(3rdparty/rapidjson-1.1.0)
 
 add_subdirectory(isp)
